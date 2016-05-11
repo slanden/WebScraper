@@ -21,16 +21,18 @@ namespace WebScraper
             doc = webRequest.Load(url);
         }        
 
-        public Dictionary<string, string> Scrape(string xPath)
+        public List<string> Scrape(string xPathStartNode, string xPath)
         {
-            Dictionary<string, string> audioFiles = new Dictionary<string, string>();
-            HtmlNodeCollection nodeList = doc.DocumentNode.SelectNodes("//audio");
-            
-            foreach(HtmlNode node in nodeList)
+            List<string> nodes = new List<string>();
+            HtmlNode startNode = doc.DocumentNode.SelectSingleNode(xPathStartNode);
+            //HtmlNodeCollection nodeList = doc.DocumentNode.SelectNodes(xPath);
+            HtmlNodeCollection nodeList = startNode.SelectNodes(xPath);
+
+            foreach (HtmlNode node in nodeList)
             {
-                //string s = node.InnerHtml;
+                string s = node.InnerHtml;
                 //s = s.Split('"', '"')[1];
-                audioFiles.Add(node.Id, node.InnerHtml.Split('"', '"')[1]);
+                //nodes.Add(node.Id, node.InnerHtml.Split('"', '"')[1]);
             }
 
             ///foreach is faster when accessing the item from the array more than once
@@ -40,7 +42,7 @@ namespace WebScraper
             //    s = s.Split('"', '"')[1];
             //    audioFiles.Add(nodeList[i].Id,s);
             //}
-            return audioFiles;
+            return nodes;
             //if (doc.ParseErrors != null && doc.ParseErrors.Count() > 0)
             //{
 

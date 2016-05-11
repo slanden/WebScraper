@@ -13,8 +13,9 @@ namespace WebScraper
 {
     public partial class Form1 : Form
     {
-        Scraper scraper = new Scraper("http://www.realmofdarkness.net/sb/bane/");
-        Dictionary<string, string> audioFiles = new Dictionary<string, string>();
+        //Scraper scraper = new Scraper("http://www.realmofdarkness.net/sb/bane/");
+        Scraper scraper = new Scraper("http://www.nationsonline.org/oneworld/countries_of_the_world.htm");
+        List<string> nodes = new List<string>();
 
         public Form1()
         {
@@ -23,7 +24,7 @@ namespace WebScraper
 
         private void TestScrape(object sender, EventArgs e)
         {
-            audioFiles = scraper.Scrape("//audio");
+            nodes = scraper.Scrape("/html/body/table[2]/tbody", "//tr[@class='border1']/td/a");
 
             //Scraper s = new Scraper();
             //s.Scrape("http://www.realmofdarkness.net/sb/bane/");
